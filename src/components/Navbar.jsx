@@ -53,69 +53,19 @@ const Navbar = () => {
                 HOME
               </a>
             </li>
-            {/* brands */}
-            <li className="nav-item dropdown active">
-              <a
-                href="#"
-                className="nav-link dropdown-toggle active"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                BRANDS
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a href="#" className="dropdown-item">
-                    GIGABYTE
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item">
-                    ASUS
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item">
-                    AMD
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item">
-                    INTEL
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item">
-                    MSI
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item">
-                    NVIDIA
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item">
-                    HYPERX
-                  </a>
-                </li>
-              </ul>
-            </li>
 
             {/* categories */}
 
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle active"
-                href="#"
+              <button
+                className="nav-link dropdown-toggle active btn"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 CATEGORIES
-              </a>
+              </button>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <a className="dropdown-item" href="#">
@@ -153,7 +103,7 @@ const Navbar = () => {
             {/* browse products */}
             <li className="nav-item">
               <a href="#" className="nav-link active" role="button">
-                BROWSE
+                Products
               </a>
             </li>
           </ul>

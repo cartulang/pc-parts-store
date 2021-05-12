@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { commerce } from "../lib/Commerce.js";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 // creates context
 const ProductsContext = createContext();
@@ -10,22 +10,19 @@ export const useProducts = () => {
   return useContext(ProductsContext);
 };
 
+// fetch products
+const fetchProducts = async () => {
+  const response = await commerce.products.list();
+
+  return response;
+};
+
 export const ProductsProvider = ({ children }) => {
   // products
-  const [products, setProducts] = useState([]);
+  const { status, data } = useQuery("products", fetchProducts);
 
-  // fetch products
-  const fetchProducts = async () => {
-    const { data } = await commerce.products.list();
-
-    setProducts(data);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
   return (
-    <ProductsContext.Provider value={{ products }}>
+    <ProductsContext.Provider value={{ data, status }}>
       {children}
     </ProductsContext.Provider>
   );

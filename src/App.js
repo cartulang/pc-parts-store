@@ -2,15 +2,18 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./css/app.css";
 import Home from "./components/Home.jsx";
 import Navbar from "./components/Navbar.jsx";
-import { useProducts } from "./context/ProductsContext";
+import ProductList from "./components/ProductList";
+import ProductDetails from "./components/ProductDetails";
+import Categories from "./components/Categories";
 
 function App() {
-  const { products } = useProducts();
-  console.log(products);
   return (
-    <div className="App">
+    <div className="App bg-light y-4">
       <Navbar />
-      <Home />
+      <Categories />
+      {/* <ProductDetails /> */}
+      {/* <ProductList /> */}
+      {/* <Home /> */}
     </div>
   );
 }
