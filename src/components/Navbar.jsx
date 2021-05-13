@@ -1,4 +1,8 @@
 import { GiShoppingCart } from "react-icons/gi";
+import { Link } from "react-router-dom";
+import { useProducts } from "../context/ProductsContext";
+import { useState } from "react";
+import Cart from "./Cart";
 
 const cartStyles = {
   position: "absolute",
@@ -13,9 +17,13 @@ const cartStyles = {
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "50%",
+  userSelect: "none",
 };
 
 const Navbar = () => {
+  const [isCartOpen, setCartIsOpen] = useState(false);
+  const { cartItems } = useProducts();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse">
       <div className="container-fluid d-flex justify-content-between align-items-center w-75">
@@ -35,23 +43,24 @@ const Navbar = () => {
             size={"30px"}
             color={"#fff"}
             role="button"
+            onClick={() => setCartIsOpen(!isCartOpen)}
           ></GiShoppingCart>
 
-          <span style={cartStyles}>0</span>
+          <span style={cartStyles}>{cartItems.length}</span>
         </div>
 
         <div className="collapse navbar-collapse w-100" id="navbarScroll">
           <p className="navbar-brand m-0">PC Parts</p>
           <ul className="navbar-nav m-auto">
             <li className="nav-item">
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="nav-link active"
                 role="button"
                 aria-current="page"
               >
                 HOME
-              </a>
+              </Link>
             </li>
 
             {/* categories */}
@@ -102,13 +111,14 @@ const Navbar = () => {
 
             {/* browse products */}
             <li className="nav-item">
-              <a href="#" className="nav-link active" role="button">
-                Products
-              </a>
+              <Link to="/products" className="nav-link active" role="button">
+                PRODUCTS
+              </Link>
             </li>
           </ul>
         </div>
       </div>
+      <Cart isCartOpen={isCartOpen} setCartIsOpen={setCartIsOpen} />
     </nav>
   );
 };

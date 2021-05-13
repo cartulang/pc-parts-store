@@ -1,6 +1,8 @@
 import { useProducts } from "../context/ProductsContext";
 import ProductDetails from "./ProductDetails";
 
+import { Link } from "react-router-dom";
+
 const sectionStyles = {
   paddingTop: "60px",
   border: "2px red solid",
@@ -20,11 +22,19 @@ const errorStyles = {
 };
 
 const ProductList = () => {
-  const { data: products, status } = useProducts();
+  const {
+    data: products,
+    status,
+    fetchProductId,
+    addItemToCart,
+  } = useProducts();
+  const content = "all";
 
   if (status === "error") {
     return <h1 style={errorStyles}>Error fetching data</h1>;
   }
+
+  // loader
 
   if (status === "loading") {
     return (
@@ -35,6 +45,8 @@ const ProductList = () => {
       ></div>
     );
   }
+
+  // product list
 
   return (
     <section className="container-fluid" style={sectionStyles}>
@@ -49,16 +61,26 @@ const ProductList = () => {
                 src={product.media.source}
                 alt={product.name}
               />
-              <p className="text-center h3">{product.name}</p>
+              <p className="text-center h3 mb-4">{product.name}</p>
+              <p className="text-center h5">
+                {product.price.formatted_with_symbol}
+              </p>
               <div className="d-flex justify-content-evenly mt-5">
-                <button
+                <Link
+                  to="/details"
                   className="btn btn-outline-secondary"
                   id={product.id}
-                  onClick={e => console.log(e.target.id)}
+                  onClick={e => fetchProductId(e.target.id)}
                 >
                   Details
+                </Link>
+                <button
+                  className="btn btn-primary"
+                  id={product.id}
+                  onClick={e => addItemToCart(e.target.id)}
+                >
+                  Add to cart
                 </button>
-                <button className="btn btn-primary">Add to cart</button>
               </div>
             </div>
           );

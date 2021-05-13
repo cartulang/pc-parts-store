@@ -36,13 +36,15 @@ const Categories = () => {
   }
 
   const filteredProducts = products.data.filter(product => {
-    return product.categories[0].slug === "graphics-card";
+    return product.categories[0].slug === "processors";
   });
 
   return (
     <section className="container-fluid" style={sectionStyles}>
       <div className="row w-75 mx-auto justify-content-evenly">
-        <h1 className="h1 border-bottom border-dark py-2">Shop</h1>
+        <h1 className="h1 border-bottom border-dark py-2">
+          {filteredProducts[0].categories[0].name}
+        </h1>
         {filteredProducts.map(product => {
           return (
             // products card

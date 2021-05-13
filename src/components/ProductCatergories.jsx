@@ -5,6 +5,8 @@ import storage from "../img/storage.jpg";
 import motherboard from "../img/motherboard.jpg";
 import monitor from "../img/monitor.jpg";
 
+import { Link } from "react-router-dom";
+
 const ProductCatergories = () => {
   return (
     <>
@@ -68,12 +70,12 @@ const ProductCatergories = () => {
         <div className="col-xl-6 col-sm-6 d-flex justify-content-center align-items-center flex-column mt-4 text-center">
           <h2 className="h2">HAVING A HARD TIME?</h2>
           <h4 className="h4 mt-4 text-secondary">SEE ALL PROCDUCTS</h4>
-          <a
-            href="#"
+          <Link
+            to="/products"
             className="text-light bg-danger px-2 py-1 text-decoration-none mt-4"
           >
             SEE ALL PRODUCTS
-          </a>
+          </Link>
         </div>
       </div>
     </>

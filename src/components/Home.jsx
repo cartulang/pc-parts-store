@@ -10,7 +10,7 @@ const Home = () => {
       <main style={mainStyle}>
         <div
           id="carouselExampleIndicators"
-          className="carousel slide h-100"
+          className="carousel slide h-100 d-lg-block d-none"
           data-bs-ride="carousel"
         >
           <div className="carousel-indicators">
