@@ -1,73 +1,92 @@
 import { useProducts } from "../context/ProductsContext";
+import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
 
-const sectionStyles = {
-  paddingTop: "60px",
-  border: "2px red solid",
-};
+import { fetchCategory } from "../api/productsApi";
 
-const spinnerStyles = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-};
+import Loader from "./Loader";
+import Error from "./Error";
 
-const errorStyles = {
-  transform: "translate(-50%,-50%)",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-};
+const Categories = ({ match }) => {
+  const { addItemToCart } = useProducts();
 
-const Categories = () => {
-  const { data: products, status } = useProducts();
+  const {
+    data: productsByCategory,
+    isLoading,
+    isError,
+    isFetching,
+  } = useQuery(
+    ["category", match.params.categoryName],
+    () => fetchCategory(match.params.categoryName),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  if (status === "error") {
-    return <h1 style={errorStyles}>Error fetching data</h1>;
-  }
+  if (isLoading || isFetching) return <Loader />;
 
-  if (status === "loading") {
-    return (
-      <div
-        className="spinner-border text-dark"
-        role="status"
-        style={spinnerStyles}
-      ></div>
-    );
-  }
+  if (isError) return <Error />;
 
-  const filteredProducts = products.data.filter(product => {
-    return product.categories[0].slug === "processors";
-  });
-
-  return (
-    <section className="container-fluid" style={sectionStyles}>
-      <div className="row w-75 mx-auto justify-content-evenly">
-        <h1 className="h1 border-bottom border-dark py-2">
-          {filteredProducts[0].categories[0].name}
+  const renderItems = () => {
+    if (!productsByCategory.data || !productsByCategory) {
+      return (
+        <h1
+          className="position-absolute top-50 start-50"
+          style={{ transform: "translateX(-7%)" }}
+        >
+          Item not found
         </h1>
-        {filteredProducts.map(product => {
+      );
+    }
+    document.title = productsByCategory.data[0].categories[0].name;
+    // renders item cards
+    return (
+      <>
+        <h1 className="h1 border-bottom border-dark py-2">
+          {productsByCategory.data[0].categories[0].name}
+        </h1>
+        {productsByCategory.data.map(product => {
+          // products card
           return (
-            // products card
-            <div className="col-3 p-4 mx-1 my-3 bg-white" key={product.id}>
+            <div
+              className="col-3 p-4 mx-1 my-3 bg-white"
+              key={product.id}
+              style={{ height: "max-content" }}
+            >
               <img
                 className="w-100 product-image"
                 src={product.media.source}
                 alt={product.name}
               />
               <p className="text-center h3">{product.name}</p>
+              <p className="text-center h5">
+                {product.price.formatted_with_symbol}
+              </p>
               <div className="d-flex justify-content-evenly mt-5">
-                <button
+                <Link
+                  to={`/products/${product.id}`}
                   className="btn btn-outline-secondary"
-                  id={product.id}
-                  onClick={e => console.log(e.target.id)}
                 >
                   Details
+                </Link>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => addItemToCart(product)}
+                >
+                  Add to cart
                 </button>
-                <button className="btn btn-primary">Add to cart</button>
               </div>
             </div>
           );
         })}
+      </>
+    );
+  };
+
+  return (
+    <section className="container-fluid">
+      <div className="row w-75 mx-auto justify-content-evenly">
+        {renderItems()}
       </div>
     </section>
   );

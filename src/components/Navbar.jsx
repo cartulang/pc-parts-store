@@ -42,7 +42,7 @@ const Navbar = () => {
           <GiShoppingCart
             size={"30px"}
             color={"#fff"}
-            role="button"
+            style={{ cursor: "pointer" }}
             onClick={() => setCartIsOpen(!isCartOpen)}
           ></GiShoppingCart>
 
@@ -53,12 +53,7 @@ const Navbar = () => {
           <p className="navbar-brand m-0">PC Parts</p>
           <ul className="navbar-nav m-auto">
             <li className="nav-item">
-              <Link
-                to="/"
-                className="nav-link active"
-                role="button"
-                aria-current="page"
-              >
+              <Link to="/" className="nav-link active" aria-current="page">
                 HOME
               </Link>
             </li>
@@ -69,7 +64,6 @@ const Navbar = () => {
               <button
                 className="nav-link dropdown-toggle active btn"
                 id="navbarDropdown"
-                role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -77,41 +71,41 @@ const Navbar = () => {
               </button>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link to="/category/processors" className="dropdown-item">
                     PROCESSORS
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link to="/category/graphics-card" className="dropdown-item">
                     GRAPHICS CARD
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link to="/category/motherboard" className="dropdown-item">
                     MOTHERBOARD
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link to="/category/ram" className="dropdown-item">
                     RAM
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link to="/category/storage" className="dropdown-item">
                     STORAGE
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link to="/category/monitor" className="dropdown-item">
                     MONITOR
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
 
             {/* browse products */}
             <li className="nav-item">
-              <Link to="/products" className="nav-link active" role="button">
+              <Link to="/products" className="nav-link active">
                 PRODUCTS
               </Link>
             </li>

@@ -1,10 +1,16 @@
 import ProductCategories from "./ProductCatergories";
+import { useEffect } from "react";
+
 const mainStyle = {
   height: "100vh",
-  paddingTop: "54px",
 };
 
 const Home = () => {
+  // changes html page title
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
+
   return (
     <>
       <main style={mainStyle}>
@@ -92,6 +98,7 @@ const Home = () => {
               <img
                 src="https://www.asus.com/us/site/motherboards/amd-ryzen-5000/websites/img/banner.jpg"
                 className="d-block w-100 h-100"
+                alt="ryzen"
               />
             </div>
 

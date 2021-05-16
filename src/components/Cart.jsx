@@ -47,12 +47,12 @@ const CoutDelBtnStyle = styled.div`
 const Cart = ({ isCartOpen }) => {
   const { cartItems, deleteItemFromCart, clearCart } = useProducts();
 
-  // an array of product prices
-  const itemPrice = [];
-
   //calculates the total amount to pay
   const totalToPay = () => {
-    //   add price to itemPrice array
+    // an array of product prices inside the cart
+    const itemPrice = [];
+
+    //   adds price to itemPrice array
     for (let i = 0; i < cartItems.length; i++) {
       itemPrice.push(cartItems[i].price.raw);
     }
@@ -64,58 +64,72 @@ const Cart = ({ isCartOpen }) => {
     return total.toLocaleString();
   };
 
-  console.log(cartItems);
-
-  return (
-    <>
-      {isCartOpen && (
-        <CartStyles className="bg-white">
-          <h3>In Cart</h3>
-          {cartItems.length <= 0 ? (
-            <h4
-              style={{
-                position: "relative",
-                top: "40%",
-                transform: "translateY(-50%)",
-              }}
-            >
-              No items
-            </h4>
-          ) : (
-            cartItems.map(item => {
-              return (
-                <CartItemStyle
-                  key={item.id}
-                  className="border-bottom border-dark"
+  const renderCartItems = () => {
+    return (
+      <CartStyles className="bg-white">
+        <h3>In Cart</h3>
+        {cartItems.length <= 0 ? (
+          <h4
+            style={{
+              position: "relative",
+              top: "40%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            No items
+          </h4>
+        ) : (
+          cartItems.map(item => {
+            return (
+              <CartItemStyle
+                key={item.id}
+                className="border-bottom border-dark"
+              >
+                <CartImgStyle src={item.media.source} alt={item.name} />
+                <h6 className="text-center mt-4">{item.name}</h6>
+                <h6>{`${item.price.formatted_with_symbol} x ${
+                  item.sort_order + 1
+                } `}</h6>
+                <button
+                  className="btn btn-danger mt-2"
+                  style={{ width: "max-content" }}
+                  onClick={() => deleteItemFromCart(item.id)}
                 >
-                  <CartImgStyle src={item.media.source} alt={item.name} />
-                  <h6 className="text-center mt-4">{`${item.name} x ${
-                    item.sort_order + 1
-                  }`}</h6>
-                  <button
-                    className="btn btn-danger mt-4"
-                    style={{ width: "max-content" }}
-                    onClick={() => deleteItemFromCart(item.id)}
-                  >
-                    Delete
-                  </button>
-                </CartItemStyle>
-              );
-            })
-          )}
-          <CoutDelBtnStyle>
-            <div>
-              <button className="btn btn-danger" onClick={clearCart}>
-                Clear Cart
-              </button>
-              <button className="btn btn-success  ms-1">Checkout</button>
-            </div>
-            <p className="mt-2 text-center h5">Total: {totalToPay() + "PHP"}</p>
-          </CoutDelBtnStyle>
-        </CartStyles>
-      )}
-    </>
-  );
+                  Delete
+                </button>
+              </CartItemStyle>
+            );
+          })
+        )}
+        <CoutDelBtnStyle>
+          <div>
+            <button
+              className={
+                cartItems <= 0
+                  ? "btn btn-danger ms-1 disabled"
+                  : "btn btn-danger ms-1"
+              }
+              onClick={clearCart}
+            >
+              Clear Cart
+            </button>
+            <button
+              className={
+                cartItems <= 0
+                  ? "btn btn-success ms-1 disabled"
+                  : "btn btn-success ms-1"
+              }
+            >
+              Checkout
+            </button>
+          </div>
+          <p className="mt-2 text-center h5">Total: {totalToPay() + "PHP"}</p>
+        </CoutDelBtnStyle>
+      </CartStyles>
+    );
+  };
+
+  return <>{isCartOpen && renderCartItems()}</>;
 };
 
 export default Cart;

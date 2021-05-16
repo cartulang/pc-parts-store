@@ -15,7 +15,7 @@ const ProductCatergories = () => {
           BROWSE CATERGORIES
         </h1>
         <div className="col-xl col-sm-6 position-relative catergory-card">
-          <a href="#">
+          <Link to="/category/graphics-card">
             <span className="bg-danger text-light px-3 py-1">
               GRAPHICS CARD
             </span>
@@ -24,47 +24,47 @@ const ProductCatergories = () => {
               alt="graphics-card"
               className="img-thumbnail w-100"
             />
-          </a>
+          </Link>
         </div>
 
         <div className="col-xl col-sm-6 position-relative catergory-card">
-          <a href="#">
+          <Link to="/category/processors">
             <span className="bg-danger text-light px-3 py-1">PROCESSORS</span>
             <img src={cpu} alt="processor" className="img-thumbnail  w-100" />
-          </a>
+          </Link>
         </div>
 
         <div className="col-xl col-sm-6 position-relative catergory-card">
-          <a href="#">
+          <Link to="/category/ram">
             <span className="bg-danger text-light px-3 py-1">RAM</span>
             <img src={ram} alt="ram" className="img-thumbnail  w-100" />
-          </a>
+          </Link>
         </div>
 
         <div className="col-xl col-sm-6 position-relative catergory-card">
-          <a href="#">
+          <Link to="/category/motherboard">
             <span className="bg-danger text-light px-3 py-1">MOTHERBOARD</span>
             <img
               src={motherboard}
               alt="motherboard"
               className="img-thumbnail  w-100"
             />
-          </a>
+          </Link>
         </div>
       </div>
       <div className="row w-75 mx-auto mt-4">
         <div className="col-xl-3 col-sm-6 position-relative catergory-card">
-          <a href="#">
+          <Link to="/category/storage">
             <span className="bg-danger text-light px-3 py-1">STORAGE</span>
             <img src={storage} alt="storage" className="img-thumbnail  w-100" />
-          </a>
+          </Link>
         </div>
 
         <div className="col-xl-3 col-sm-6 position-relative catergory-card">
-          <a href="#">
+          <Link to="/category/monitor">
             <span className="bg-danger text-light px-3 py-1">MONITOR</span>
             <img src={monitor} alt="storage" className="img-thumbnail  w-100" />
-          </a>
+          </Link>
         </div>
 
         <div className="col-xl-6 col-sm-6 d-flex justify-content-center align-items-center flex-column mt-4 text-center">

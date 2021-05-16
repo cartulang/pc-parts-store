@@ -1,102 +1,111 @@
-import { useQuery } from "react-query";
+import Loader from "./Loader";
+import Error from "./Error";
+
 import { useProducts } from "../context/ProductsContext";
-import { commerce } from "../lib/Commerce";
+import { useHistory, useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 
-const sectionStyles = {
-  paddingTop: "60px",
-  border: "2px red solid",
+import { fetchDetails } from "../api/productsApi";
+
+const backButtonStyle = {
+  position: "relative",
+  top: "5rem",
 };
 
-const spinnerStyles = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
+const descriptionStyle = {
+  position: "relative",
+  top: "1rem",
 };
 
-const errorStyles = {
-  transform: "translate(-50%,-50%)",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-};
+const ProductDetails = ({ match }) => {
+  const history = useHistory();
+  console.log(history.push);
+  const location = useLocation();
+  console.log(location);
 
-const ProductDetails = () => {
+  // fetch products by category
   const {
-    data: productDetails,
-    status,
-    productId,
-    addItemToCart,
-  } = useProducts();
-
-  if (status === "error") {
-    return <h1 style={errorStyles}>Error fetching data</h1>;
-  }
-
-  if (status === "loading") {
-    return (
-      <div
-        className="spinner-border text-dark"
-        role="status"
-        style={spinnerStyles}
-      ></div>
-    );
-  }
-
-  const filteredProduct = productDetails.data.filter(product => {
-    return product.id === productId;
+    data: itemDetails,
+    isLoading,
+    isError,
+    isFetching,
+  } = useQuery("item", () => fetchDetails(match.params.productId), {
+    refetchOnWindowFocus: false,
   });
 
-  console.log(filteredProduct);
+  // imports add cart function
+  const { addItemToCart } = useProducts();
 
-  if (filteredProduct <= 0) return <h1 style={errorStyles}>Item not found</h1>;
+  // loading
+  if (isLoading || isFetching) return <Loader />;
 
-  return (
-    <>
-      <section
-        style={sectionStyles}
-        className="container w-50 border border-danger mx-auto my-4 bg-white"
-      >
-        <div className="d-flex flex-row justify-content-evenly align-items-stretch p-4">
-          <div className="w-50">
-            <img
-              className="w-100 thumb-nail"
-              src={filteredProduct[0].media.source}
-              alt={filteredProduct[0].name}
-            />
+  // error message
+  if (isError) return <Error />;
+
+  const renderItemDetails = () => {
+    document.title = itemDetails.name;
+    return (
+      <>
+        <section className="container w-50 mx-auto my-4 bg-white">
+          <div className="d-flex flex-row justify-content-evenly align-items-stretch p-4">
+            <div className="w-50">
+              <img
+                className="w-100 thumb-nail"
+                src={itemDetails.media.source}
+                alt={itemDetails.name}
+              />
+            </div>
+            <div
+              className="row flex-column justify-content-evenly"
+              style={{ maxWidth: "400px", minWidth: "300px" }}
+            >
+              <div className="col-12">
+                <h1 className="h2">{itemDetails.name}</h1>
+              </div>
+              <div className="col-12">
+                <h2>{itemDetails.price.formatted_with_symbol}</h2>
+              </div>
+              <div className="col-12 d-flex justify-content-center">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={itemDetails.checkout_url.display}
+                  className="btn btn-danger w-50"
+                >
+                  Buy Now
+                </a>
+                <button
+                  className="btn btn-warning w-50 ms-2"
+                  onClick={() => addItemToCart(itemDetails)}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
           </div>
-          <div
-            className="row flex-column justify-content-evenly"
-            style={{ maxWidth: "400px", minWidth: "300px" }}
+          <button
+            className="btn btn-outline-secondary position-absolute"
+            style={backButtonStyle}
+            onClick={history.goBack}
           >
-            <div className="col-12">
-              <h1 className="h1">{filteredProduct[0].name}</h1>
-            </div>
-            <div className="col-12">
-              <h2>{filteredProduct[0].price.formatted_with_symbol}</h2>
-            </div>
+            Back
+          </button>
+        </section>
+        <section
+          style={descriptionStyle}
+          className="container w-50 mx-auto bg-white p-5"
+        >
+          <p
+            dangerouslySetInnerHTML={{
+              __html: itemDetails.description,
+            }}
+          />
+        </section>
+      </>
+    );
+  };
 
-            <div className="col-12 d-flex justify-content-center">
-              <button className="btn btn-danger w-50">Buy Now</button>
-              <button
-                className="btn btn-warning w-50 ms-2"
-                onClick={() => addItemToCart(filteredProduct[0].id)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container w-50 mx-auto bg-white p-4">
-        <p
-          dangerouslySetInnerHTML={{
-            __html: filteredProduct[0].description,
-          }}
-        />
-      </section>
-    </>
-  );
+  return <>{renderItemDetails()}</>;
 };
 
 export default ProductDetails;
