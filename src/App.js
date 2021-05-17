@@ -10,20 +10,6 @@ import NotFound from "./components/Not Found";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-const countedOccurrences = arr => {
-  return arr.reduce((acc, val) => {
-    console.log(val);
-    if (val in acc) {
-      acc[val]++;
-    } else {
-      acc[val] = 1;
-    }
-    return acc;
-  }, {});
-};
-const a = [0, 9, 9, 0, 8, 12, 12, 8, 12, 0];
-console.log(countedOccurrences(a)); // { 0:3, 8:2, 9:2, 12:3 }
-
 function App() {
   return (
     <Router>
@@ -33,7 +19,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
 
-          <Route path="/products/" exact component={ProductList} />
+          <Route path="/products" exact component={ProductList} />
 
           <Route path="/products/:productId" component={ProductDetails} />
 

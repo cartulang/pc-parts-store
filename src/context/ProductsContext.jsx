@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
+import { useQuery } from "react-query";
+import { commerce } from "../lib/Commerce";
 
 // creates context
 const ProductsContext = createContext();
@@ -9,33 +11,49 @@ export const useProducts = () => {
 };
 
 export const ProductsProvider = ({ children }) => {
-  // cart items
-  const [cartItems, setCartItems] = useState([]);
+  // fetch cart
+  const fetchCart = async () => {
+    return await commerce.cart.retrieve();
+  };
+  const {
+    data: cart,
+    isLoading,
+    isFetching,
+    isError,
+    refetch,
+  } = useQuery("cart", fetchCart, {
+    refetchOnWindowFocus: false,
+  });
 
-  // add items to card
-  const addItemToCart = itemToAdd => {
-    setCartItems(cartItems.concat(itemToAdd));
-    console.log(cartItems);
+  // add items to cart
+  const addItemToCart = async (itemToAdd, quatity = 1) => {
+    await commerce.cart.add(itemToAdd, quatity);
+    refetch();
   };
 
   // removes item from cart
-  const deleteItemFromCart = itemToDelete => {
-    const remainingItems = cartItems.filter(item => item.id !== itemToDelete);
-    setCartItems(remainingItems);
+  const deleteItemFromCart = async itemToDelete => {
+    await commerce.cart.remove(itemToDelete);
+    refetch();
   };
 
   // clear items from cart
-  const clearCart = () => {
-    setCartItems([]);
+  const clearCart = async () => {
+    await commerce.cart.empty();
+    refetch();
   };
 
   return (
     <ProductsContext.Provider
       value={{
-        cartItems,
+        cart,
         addItemToCart,
         deleteItemFromCart,
         clearCart,
+        fetchCart,
+        isLoading,
+        isFetching,
+        isError,
       }}
     >
       {children}

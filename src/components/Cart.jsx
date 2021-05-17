@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useProducts } from "../context/ProductsContext";
 
+import Error from "./Error";
+
 const CartStyles = styled.section`
   min-height: 100vh;
   position: fixed;
@@ -16,6 +18,7 @@ const CartStyles = styled.section`
   z-index: 10;
   padding: 1rem 1rem 10rem 1rem;
   overflow-y: scroll;
+  min-width: 300px;
 `;
 
 const CartItemStyle = styled.article`
@@ -45,67 +48,41 @@ const CoutDelBtnStyle = styled.div`
 `;
 
 const Cart = ({ isCartOpen }) => {
-  const { cartItems, deleteItemFromCart, clearCart } = useProducts();
-
-  //calculates the total amount to pay
-  const totalToPay = () => {
-    // an array of product prices inside the cart
-    const itemPrice = [];
-
-    //   adds price to itemPrice array
-    for (let i = 0; i < cartItems.length; i++) {
-      itemPrice.push(cartItems[i].price.raw);
-    }
-    if (itemPrice.length <= 0) return "0.00";
-
-    let total = itemPrice.reduce(
-      (accumulator, current) => current + accumulator
-    );
-    return total.toLocaleString();
-  };
+  const {
+    cart,
+    deleteItemFromCart,
+    clearCart,
+    isFetching,
+    isError,
+    isLoading,
+  } = useProducts();
 
   const renderCartItems = () => {
     return (
       <CartStyles className="bg-white">
         <h3>In Cart</h3>
-        {cartItems.length <= 0 ? (
-          <h4
-            style={{
-              position: "relative",
-              top: "40%",
-              transform: "translateY(-50%)",
-            }}
-          >
-            No items
-          </h4>
-        ) : (
-          cartItems.map(item => {
-            return (
-              <CartItemStyle
-                key={item.id}
-                className="border-bottom border-dark"
+
+        {cart.line_items.map(item => {
+          return (
+            <CartItemStyle key={item.id} className="border-bottom border-dark">
+              <CartImgStyle src={item.media.source} alt={item.name} />
+              <h6 className="text-center mt-4">{item.name}</h6>
+              <h6>{`${item.price.formatted_with_symbol} x ${item.quantity} `}</h6>
+              <button
+                className="btn btn-danger mt-2"
+                style={{ width: "max-content" }}
+                onClick={() => deleteItemFromCart(item.id)}
               >
-                <CartImgStyle src={item.media.source} alt={item.name} />
-                <h6 className="text-center mt-4">{item.name}</h6>
-                <h6>{`${item.price.formatted_with_symbol} x ${
-                  item.sort_order + 1
-                } `}</h6>
-                <button
-                  className="btn btn-danger mt-2"
-                  style={{ width: "max-content" }}
-                  onClick={() => deleteItemFromCart(item.id)}
-                >
-                  Delete
-                </button>
-              </CartItemStyle>
-            );
-          })
-        )}
+                Delete
+              </button>
+            </CartItemStyle>
+          );
+        })}
         <CoutDelBtnStyle>
           <div>
             <button
               className={
-                cartItems <= 0
+                cart.line_items <= 0
                   ? "btn btn-danger ms-1 disabled"
                   : "btn btn-danger ms-1"
               }
@@ -113,21 +90,48 @@ const Cart = ({ isCartOpen }) => {
             >
               Clear Cart
             </button>
-            <button
+            <a
+              href={cart.hosted_checkout_url}
               className={
-                cartItems <= 0
+                cart.line_items <= 0
                   ? "btn btn-success ms-1 disabled"
                   : "btn btn-success ms-1"
               }
             >
               Checkout
-            </button>
+            </a>
           </div>
-          <p className="mt-2 text-center h5">Total: {totalToPay() + "PHP"}</p>
+          <p className="mt-2 text-center h5">
+            Total: {cart.subtotal.formatted_with_symbol}
+          </p>
         </CoutDelBtnStyle>
       </CartStyles>
     );
   };
+
+  if (isFetching || isLoading)
+    return (
+      isCartOpen && (
+        <>
+          <CartStyles className="bg-white">
+            <h3>In Cart</h3>
+            <CoutDelBtnStyle>
+              <div>
+                <button className="btn btn-danger ms-1 disabled">
+                  Clear Cart
+                </button>
+                <button className="btn btn-success ms-1 disabled">
+                  Checkout
+                </button>
+              </div>
+              <p className="mt-2 text-center h5">Total: 0.00</p>
+            </CoutDelBtnStyle>
+          </CartStyles>
+        </>
+      )
+    );
+
+  if (isError) return <Error />;
 
   return <>{isCartOpen && renderCartItems()}</>;
 };

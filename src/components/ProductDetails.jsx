@@ -2,26 +2,24 @@ import Loader from "./Loader";
 import Error from "./Error";
 
 import { useProducts } from "../context/ProductsContext";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 
 import { fetchDetails } from "../api/productsApi";
 
 const backButtonStyle = {
   position: "relative",
-  top: "5rem",
+  top: "-4rem",
 };
 
 const descriptionStyle = {
   position: "relative",
-  top: "1rem",
+  top: "2rem",
+  minWidth: "300px",
 };
 
 const ProductDetails = ({ match }) => {
   const history = useHistory();
-  console.log(history.push);
-  const location = useLocation();
-  console.log(location);
 
   // fetch products by category
   const {
@@ -46,36 +44,38 @@ const ProductDetails = ({ match }) => {
     document.title = itemDetails.name;
     return (
       <>
-        <section className="container w-50 mx-auto my-4 bg-white">
-          <div className="d-flex flex-row justify-content-evenly align-items-stretch p-4">
-            <div className="w-50">
+        <section
+          className="container w-50 mx-auto my-4 bg-white"
+          style={{ minWidth: "300px", position: "relative", top: "4rem" }}
+        >
+          <div className="row justify-content-evenly align-items-stretch p-4">
+            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-sm-12 col-xs-12">
               <img
-                className="w-100 thumb-nail"
+                className="w-100 h-100 thumb-nail"
                 src={itemDetails.media.source}
                 alt={itemDetails.name}
               />
             </div>
-            <div
-              className="row flex-column justify-content-evenly"
-              style={{ maxWidth: "400px", minWidth: "300px" }}
-            >
+            <div className="row col-xl-8 col-lg-7 col-md-12 col-sm-12 col-xs-12 flex-column justify-content-evenly">
               <div className="col-12">
-                <h1 className="h2">{itemDetails.name}</h1>
+                <h1 className="h2 mt-4 text-center">{itemDetails.name}</h1>
               </div>
-              <div className="col-12">
-                <h2>{itemDetails.price.formatted_with_symbol}</h2>
+              <div className="col-xs-12">
+                <h2 className="text-center">
+                  {itemDetails.price.formatted_with_symbol}
+                </h2>
               </div>
-              <div className="col-12 d-flex justify-content-center">
+              <div className="row col-lg-12 col-md-12 col-xs-12 justify-content-center align-items-center mx-auto w-100">
                 <a
                   target="_blank"
                   rel="noreferrer"
                   href={itemDetails.checkout_url.display}
-                  className="btn btn-danger w-50"
+                  className="btn btn-danger mt-2 col-xl-4 col-lg-5 col-md-12 col-sm-12 col-xs-12 mx-1"
                 >
                   Buy Now
                 </a>
                 <button
-                  className="btn btn-warning w-50 ms-2"
+                  className="btn btn-warning mt-2 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12 mx-1"
                   onClick={() => addItemToCart(itemDetails)}
                 >
                   Add to Cart
@@ -93,7 +93,7 @@ const ProductDetails = ({ match }) => {
         </section>
         <section
           style={descriptionStyle}
-          className="container w-50 mx-auto bg-white p-5"
+          className="container w-50 mx-auto mt-5 bg-white p-5"
         >
           <p
             dangerouslySetInnerHTML={{

@@ -49,7 +49,7 @@ const Categories = ({ match }) => {
           // products card
           return (
             <div
-              className="col-3 p-4 mx-1 my-3 bg-white"
+              className="col-xl-3 col-lg-5 col-md-5 p-4 mx-1 my-3 bg-white"
               key={product.id}
               style={{ height: "max-content" }}
             >
@@ -62,15 +62,15 @@ const Categories = ({ match }) => {
               <p className="text-center h5">
                 {product.price.formatted_with_symbol}
               </p>
-              <div className="d-flex justify-content-evenly mt-5">
+              <div className="row justify-content-evenly mt-5">
                 <Link
                   to={`/products/${product.id}`}
-                  className="btn btn-outline-secondary"
+                  className="btn btn-outline-secondary mt-2 col-lg-auto col-md-auto col-xs-12"
                 >
                   Details
                 </Link>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary mt-2 col-lg-auto col-md-auto"
                   onClick={() => addItemToCart(product)}
                 >
                   Add to cart

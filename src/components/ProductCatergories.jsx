@@ -67,7 +67,7 @@ const ProductCatergories = () => {
           </Link>
         </div>
 
-        <div className="col-xl-6 col-sm-6 d-flex justify-content-center align-items-center flex-column mt-4 text-center">
+        <div className="col-xl-6 col-sm-6 d-flex justify-content-center align-items-center flex-column mt-4 text-center p-4">
           <h2 className="h2">HAVING A HARD TIME?</h2>
           <h4 className="h4 mt-4 text-secondary">SEE ALL PROCDUCTS</h4>
           <Link

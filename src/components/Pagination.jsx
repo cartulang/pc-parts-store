@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const Pagination = ({ products, setPage, page }) => {
   const totalPages = products.meta.pagination.total_pages;
   let currentPage = products.meta.pagination.current_page;
@@ -30,9 +28,9 @@ const Pagination = ({ products, setPage, page }) => {
             currentPage >= totalPages ? "page-item disabled" : "page-item"
           }
         >
-          <Link className="page-link" onClick={nextButton}>
+          <button className="page-link" onClick={nextButton}>
             Next
-          </Link>
+          </button>
         </li>
       </ul>
     </nav>

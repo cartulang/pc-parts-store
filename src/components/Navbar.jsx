@@ -22,7 +22,7 @@ const cartStyles = {
 
 const Navbar = () => {
   const [isCartOpen, setCartIsOpen] = useState(false);
-  const { cartItems } = useProducts();
+  const { cart } = useProducts();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse">
@@ -46,7 +46,9 @@ const Navbar = () => {
             onClick={() => setCartIsOpen(!isCartOpen)}
           ></GiShoppingCart>
 
-          <span style={cartStyles}>{cartItems.length}</span>
+          <span style={cartStyles}>
+            {!cart ? "0" : cart.total_items.toString()}
+          </span>
         </div>
 
         <div className="collapse navbar-collapse w-100" id="navbarScroll">
