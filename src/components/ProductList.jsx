@@ -31,6 +31,7 @@ const ProductList = () => {
     isError,
   } = useQuery(["products", page], () => fetchProducts(page), {
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   if (isLoading) return <Loader />;

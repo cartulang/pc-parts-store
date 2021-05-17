@@ -20,6 +20,7 @@ const Categories = ({ match }) => {
     () => fetchCategory(match.params.categoryName),
     {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     }
   );
 
