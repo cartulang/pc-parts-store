@@ -9,7 +9,6 @@ const CartStyles = styled.section`
   right: 0;
   top: 55px;
   bottom: 0px;
-  border: red solid 2px;
   width: 15%;
   max-width: 500px;
   display: flex;
@@ -59,7 +58,7 @@ const Cart = ({ isCartOpen }) => {
 
   const renderCartItems = () => {
     return (
-      <CartStyles className="bg-white">
+      <CartStyles className="bg-white border">
         <h3>In Cart</h3>
 
         {cart.line_items.map(item => {
