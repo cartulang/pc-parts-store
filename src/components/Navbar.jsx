@@ -55,7 +55,11 @@ const Navbar = () => {
           <p className="navbar-brand m-0">PC Parts</p>
           <ul className="navbar-nav m-auto">
             <li className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page">
+              <Link
+                to="/pc-parts-store"
+                className="nav-link active"
+                aria-current="page"
+              >
                 HOME
               </Link>
             </li>
