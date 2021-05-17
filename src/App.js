@@ -8,7 +8,7 @@ import Categories from "./components/Categories";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./components/Not Found";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <ScrollToTop />
         <Navbar />
         <Switch>
-          <Route path="/pc-parts-store" exact component={Home} />
+          <Route path="/" exact component={Home} />
 
           <Route path="/products" exact component={ProductList} />
 
