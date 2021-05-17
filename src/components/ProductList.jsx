@@ -18,10 +18,6 @@ const ProductList = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    document.title = "Products";
-  }, []);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
 
@@ -40,6 +36,7 @@ const ProductList = () => {
 
   // product list
   const renderProductCard = () => {
+    document.title = "Products";
     return products.data.map(product => {
       return (
         // products card
