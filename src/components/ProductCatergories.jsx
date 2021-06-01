@@ -15,7 +15,7 @@ const ProductCatergories = () => {
           BROWSE CATERGORIES
         </h1>
         <div className="col-xl col-sm-6 position-relative catergory-card">
-          <Link to="/pc-parts-store/category/graphics-card">
+          <Link to="/category/graphics-card">
             <span className="bg-danger text-light px-3 py-1">
               GRAPHICS CARD
             </span>
