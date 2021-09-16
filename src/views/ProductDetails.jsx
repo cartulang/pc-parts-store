@@ -1,5 +1,5 @@
-import Loader from "./Loader";
-import Error from "./Error";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 import { useProducts } from "../context/ProductsContext";
 import { useHistory } from "react-router-dom";
@@ -9,7 +9,8 @@ import { fetchDetails } from "../api/productsApi";
 
 const backButtonStyle = {
   position: "relative",
-  top: "-4rem",
+  top: "0.5rem",
+  left: "-5rem",
 };
 
 const descriptionStyle = {
@@ -45,10 +46,10 @@ const ProductDetails = ({ match }) => {
     return (
       <>
         <section
-          className="container w-50 mx-auto my-4 bg-white"
+          className="container w-50 mx-auto pt-4 bg-white"
           style={{ minWidth: "300px", position: "relative", top: "4rem" }}
         >
-          <div className="row justify-content-evenly align-items-stretch p-4">
+          <div className="row justify-content-evenly align-items-stretch">
             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-sm-12 col-xs-12">
               <img
                 className="w-100 h-100 thumb-nail"

@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { ProductsProvider } from "./context/ProductsContext";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "bootstrap/dist/css/bootstrap.css";
+import "@popperjs/core";
 
 const queryClient = new QueryClient();
 

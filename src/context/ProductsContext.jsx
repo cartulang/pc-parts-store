@@ -26,8 +26,8 @@ export const ProductsProvider = ({ children }) => {
   });
 
   // add items to cart
-  const addItemToCart = async (itemToAdd, quatity = 1) => {
-    await commerce.cart.add(itemToAdd, quatity);
+  const addItemToCart = async (itemToAdd, quantity = 1) => {
+    await commerce.cart.add(itemToAdd, quantity);
     refetch();
   };
 

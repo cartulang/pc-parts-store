@@ -1,19 +1,18 @@
-import "bootstrap/dist/css/bootstrap.css";
 import "./css/app.css";
-import Home from "./components/Home.jsx";
+import Home from "./views/Home.jsx";
 import Navbar from "./components/Navbar.jsx";
-import ProductList from "./components/ProductList";
-import ProductDetails from "./components/ProductDetails";
-import Categories from "./components/Categories";
+import ProductList from "./views/ProductList";
+import ProductDetails from "./views/ProductDetails";
+import Categories from "./views/Categories";
 import ScrollToTop from "./components/ScrollToTop";
-import NotFound from "./components/Not Found";
+import NotFound from "./views/Not Found";
 
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App bg-light min-vh-100">
         <ScrollToTop />
         <Navbar />
         <Switch>
