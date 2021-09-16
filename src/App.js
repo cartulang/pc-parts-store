@@ -5,6 +5,7 @@ import ProductList from "./views/ProductList";
 import ProductDetails from "./views/ProductDetails";
 import Categories from "./views/Categories";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
 import NotFound from "./views/Not Found";
 
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
@@ -12,7 +13,7 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <div className="App bg-light min-vh-100">
+      <div className="App bg-light">
         <ScrollToTop />
         <Navbar />
         <Switch>
@@ -26,6 +27,7 @@ function App() {
 
           <Route path="*" component={NotFound} />
         </Switch>
+        <Footer />
       </div>
     </Router>
   );
