@@ -8,29 +8,29 @@ import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
 import NotFound from "./views/Not Found";
 
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-  return (
-    <Router>
-      <div className="App bg-light">
-        <ScrollToTop />
-        <Navbar />
-        <Switch>
-          <Route path="/" exact component={Home} />
+	return (
+		<Router>
+			<div className="App bg-light">
+				<ScrollToTop />
+				<Navbar />
+				<Switch>
+					<Route path="/" exact component={Home} />
 
-          <Route path="/products" exact component={ProductList} />
+					<Route path="/products" exact component={ProductList} />
 
-          <Route path="/products/:productId" component={ProductDetails} />
+					<Route path="/products/:productId" component={ProductDetails} />
 
-          <Route path="/category/:categoryName" component={Categories} />
+					<Route path="/category/:categoryName" component={Categories} />
 
-          <Route path="*" component={NotFound} />
-        </Switch>
-        <Footer />
-      </div>
-    </Router>
-  );
+					<Route path="*" component={NotFound} />
+				</Switch>
+				<Footer />
+			</div>
+		</Router>
+	);
 }
 
 export default App;
