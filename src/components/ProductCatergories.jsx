@@ -71,7 +71,7 @@ const ProductCatergories = () => {
 					<h2 className="h2">HAVING A HARD TIME?</h2>
 					<h4 className="h4 mt-4 text-secondary">SEE ALL PROCDUCTS</h4>
 					<Link
-						to={`/products?page=1`}
+						to="/products?page=1`"
 						className="text-light bg-danger px-2 py-1 text-decoration-none mt-4"
 					>
 						SEE ALL PRODUCTS
