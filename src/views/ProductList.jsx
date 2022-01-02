@@ -6,54 +6,55 @@ import ProductCard from "../components/ProductCard";
 
 // hooks
 import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 
 // functions
 import { fetchProducts } from "../api/productsApi";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import NotFound from "./Not Found";
 
 const ProductList = () => {
-  const [page, setPage] = useState(1);
+	const params = useParams();
+	const [page, setPage] = useState(params["page"] || 1);
 
-  useLayoutEffect(() => {
-    document.title = "Products";
-  }, []);
+	const {
+		data: products,
+		isLoading,
+		isError,
+	} = useQuery(["products", page], () => fetchProducts(page), {
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
+		retry: false,
+	});
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [page]);
+	useLayoutEffect(() => {
+		document.title = "Products";
+	}, []);
 
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = useQuery(["products", page], () => fetchProducts(page), {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-  });
+	if (isLoading) return <Loader />;
 
-  if (isLoading) return <Loader />;
+	if (isError) return <Error />;
 
-  if (isError) return <Error />;
-
-  // product list
-  const renderProductCards = () => {
-    return products.data.map(product => {
-      return (
-        // products card
-        <ProductCard product={product} key={product.id} />
-      );
-    });
-  };
-
-  return (
-    <section className="container-fluid d-flex flex-column justify-content-center align-items-center">
-      <div className="row w-75 mx-auto justify-content-evenly">
-        <h1 className="h1 border-bottom border-dark py-5 mt-5">Shop</h1>
-        {renderProductCards()}
-      </div>
-      <Pagination page={page} products={products} setPage={setPage} />
-    </section>
-  );
+	return (
+		<section className="container-fluid d-flex flex-column justify-content-center align-items-center">
+			<div className="row w-75 mx-auto justify-content-evenly">
+				{!products.data ? (
+					<NotFound />
+				) : (
+					<>
+						<h1 className="h1 border-bottom border-dark py-5 mt-5">Shop</h1>
+						{products.data.map((product) => {
+							return (
+								// products card
+								<ProductCard product={product} key={product.id} />
+							);
+						})}
+					</>
+				)}
+			</div>
+			<Pagination page={page} products={products} setPage={setPage} />
+		</section>
+	);
 };
 
 export default ProductList;
